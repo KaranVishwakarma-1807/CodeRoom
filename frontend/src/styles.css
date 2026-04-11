@@ -1,0 +1,249 @@
+:root {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #12263a;
+  background: #f4f7fb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+input,
+select,
+button,
+textarea {
+  font: inherit;
+  padding: 0.5rem 0.7rem;
+}
+
+button {
+  cursor: pointer;
+}
+
+.navbar,
+.room-header,
+.panel {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.navbar {
+  margin: 1rem;
+  padding: 0.8rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.navbar nav {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.auth-page,
+.page,
+.room-page {
+  padding: 1rem;
+}
+
+.auth-form,
+.panel {
+  padding: 1rem;
+}
+
+.auth-form {
+  max-width: 360px;
+  margin: 3rem auto;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.room-header {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto auto;
+  gap: 0.7rem;
+  align-items: center;
+  padding: 0.8rem;
+}
+
+.room-main {
+  margin-top: 0.8rem;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 0.8rem;
+}
+
+.editor-shell {
+  border: 1px solid #d7e1ea;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 0.6rem;
+}
+
+.chat-panel {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.chat-messages {
+  border: 1px solid #d7e1ea;
+  border-radius: 8px;
+  min-height: 260px;
+  max-height: 260px;
+  padding: 0.6rem;
+  overflow-y: auto;
+}
+
+.output-panel pre {
+  background: #0f172a;
+  color: #e2e8f0;
+  padding: 0.8rem;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.spread {
+  justify-content: space-between;
+}
+
+.error {
+  color: #b00020;
+}
+
+.status {
+  color: #44576d;
+}
+
+.room-bottom-grid {
+  margin-top: 0.8rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+}
+
+.feedback-form,
+.history-panel,
+.scorecard-panel,
+.video-panel {
+  margin-top: 0.8rem;
+}
+
+.feedback-form {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.feedback-form textarea {
+  min-height: 70px;
+  resize: vertical;
+}
+
+.feedback-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+.feedback-grid label {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.scorecard-item,
+.history-item {
+  border: 1px solid #d7e1ea;
+  border-radius: 10px;
+  padding: 0.7rem;
+  margin-bottom: 0.6rem;
+}
+
+.video-panel input {
+  flex: 1;
+}
+
+.video-controls {
+  margin-top: 0.6rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.video-layout {
+  margin-top: 0.6rem;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.video-layout.focus {
+  grid-template-columns: 3fr 1fr;
+}
+
+.video-layout.balanced {
+  grid-template-columns: 2fr 1fr;
+}
+
+.video-layout.compact {
+  grid-template-columns: 1fr;
+}
+
+.video-frame-shell {
+  border: 1px solid #d7e1ea;
+  border-radius: 10px;
+  overflow: hidden;
+  min-height: 320px;
+  background: #f8fbff;
+}
+
+.video-frame-container {
+  width: 100%;
+  height: 360px;
+}
+
+.video-participants {
+  border: 1px solid #d7e1ea;
+  border-radius: 10px;
+  background: #f8fbff;
+  padding: 0.7rem;
+}
+
+.video-participants ul {
+  margin: 0;
+  padding-left: 1rem;
+}
+
+@media (max-width: 900px) {
+  .room-header {
+    grid-template-columns: 1fr;
+  }
+
+  .room-main {
+    grid-template-columns: 1fr;
+  }
+
+  .room-bottom-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .feedback-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .video-layout,
+  .video-layout.focus,
+  .video-layout.balanced,
+  .video-layout.compact {
+    grid-template-columns: 1fr;
+  }
+}
