@@ -58,7 +58,7 @@ FastAPI + React project scaffold for a live interview room with chat, collaborat
 
 Add these values in `backend/.env`:
 
-- `METERED_DOMAIN=yourapp.metered.live`
+- `METERED_DOMAIN=app.metered.live`
 - `METERED_SECRET_KEY=...`
 - `METERED_EMBED_SDK_URL=https://cdn.metered.ca/sdk/frame/1.4.3/sdk-frame.min.js`
 
@@ -91,11 +91,3 @@ npm run dev
 - Recommended free starter: **Piston** (`https://emkc.org/api/v2/piston/execute`)
 - Already integrated via `POST /api/v1/execute` in backend.
 - Set `PISTON_API_URL` in `backend/.env`.
-
-## Next Phase Suggestions
-
-1. Replace plain textarea with Monaco editor + syntax highlighting.
-2. Add Redis for transient room state and reconnect recovery.
-3. Add room expiry background cleanup task.
-4. Add durable code snapshots and chat history endpoints.
-5. Add Metered/WebRTC integration for audio/video.
