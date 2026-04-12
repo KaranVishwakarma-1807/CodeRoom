@@ -183,22 +183,29 @@ export default function InterviewRoom() {
   const resetTimerAction = () => send({ type: "timer_reset", room_code: roomCode, payload: { seconds: 1800 } });
 
   return (
-    <main className="room-page">
+    <main className="room-page app-shell">
       <header className="room-header panel">
-        <strong>{roomTitle}</strong>
-        <Timer
-          seconds={timerSeconds}
-          isRunning={timerRunning}
-          onStart={startTimer}
-          onPause={pauseTimerAction}
-          onReset={resetTimerAction}
-        />
-        <ParticipantList participants={participants} />
-        <div className="row">
-          <button onClick={handleStartSession} disabled={sessionBusy || !isInterviewer}>Start Session</button>
-          <button onClick={handleEndSession} disabled={sessionBusy || !isInterviewer}>End Session</button>
+        <div className="room-topbar">
+          <div>
+            <h2>{roomTitle}</h2>
+            <p className="status">{statusMessage}</p>
+          </div>
+          <button onClick={() => navigate("/dashboard")}>Leave</button>
         </div>
-        <button onClick={() => navigate("/dashboard")}>Leave</button>
+        <div className="room-toolbar">
+          <Timer
+            seconds={timerSeconds}
+            isRunning={timerRunning}
+            onStart={startTimer}
+            onPause={pauseTimerAction}
+            onReset={resetTimerAction}
+          />
+          <ParticipantList participants={participants} />
+          <div className="row">
+            <button onClick={handleStartSession} disabled={sessionBusy || !isInterviewer}>Start Session</button>
+            <button onClick={handleEndSession} disabled={sessionBusy || !isInterviewer}>End Session</button>
+          </div>
+        </div>
       </header>
 
       <section className="room-main">
@@ -240,7 +247,6 @@ export default function InterviewRoom() {
           </article>
         ))}
       </section>
-      <p className="status">{statusMessage}</p>
     </main>
   );
 }

@@ -4,6 +4,7 @@ from datetime import datetime
 from fastapi import APIRouter, Depends, HTTPException, WebSocket, WebSocketDisconnect
 from sqlalchemy.orm import Session
 
+from app.core.dependencies import get_or_create_bypass_user, is_auth_bypass_enabled
 from app.core.security import decode_access_token
 from app.core.database import get_db
 from app.models.chat_message import ChatMessage
@@ -45,18 +46,19 @@ async def broadcast_presence(room_code: str, user: dict, action: str):
 @router.websocket("/ws/rooms/{room_code}")
 async def room_socket(websocket: WebSocket, room_code: str, db: Session = Depends(get_db)):
     token = websocket.query_params.get("token")
-    if not token:
-        await websocket.close(code=1008)
-        return
+    user = None
 
-    try:
-        payload = decode_access_token(token)
-        user_id = int(payload["sub"])
-    except (ValueError, KeyError):
-        await websocket.close(code=1008)
-        return
+    if token:
+        try:
+            payload = decode_access_token(token)
+            user_id = int(payload["sub"])
+            user = db.query(User).filter(User.id == user_id).first()
+        except (ValueError, KeyError):
+            user = None
 
-    user = db.query(User).filter(User.id == user_id).first()
+    if not user and is_auth_bypass_enabled():
+        user = get_or_create_bypass_user(db)
+
     if not user:
         await websocket.close(code=1008)
         return

@@ -4,10 +4,12 @@ export default function Timer({ seconds, isRunning, onStart, onPause, onReset })
 
   return (
     <div className="timer">
-      <strong>{minutes}:{remaining}</strong>
-      <button onClick={onStart} disabled={isRunning}>Start</button>
-      <button onClick={onPause} disabled={!isRunning}>Pause</button>
-      <button onClick={onReset}>Reset</button>
+      <strong className="timer-value">{minutes}:{remaining}</strong>
+      <div className="timer-actions">
+        <button onClick={onStart} disabled={isRunning}>Start</button>
+        <button onClick={onPause} disabled={!isRunning}>Pause</button>
+        <button onClick={onReset}>Reset</button>
+      </div>
     </div>
   );
 }

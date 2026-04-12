@@ -6,7 +6,8 @@ export default function ParticipantList({ participants = [] }) {
         {participants.length === 0 ? <li>No one online</li> : null}
         {participants.map((p, i) => (
           <li key={`${p.name}-${i}`}>
-            {p.name} ({p.role || "member"})
+            <span>{p.name}</span>
+            <span className="role-pill">{p.role || "member"}</span>
           </li>
         ))}
       </ul>

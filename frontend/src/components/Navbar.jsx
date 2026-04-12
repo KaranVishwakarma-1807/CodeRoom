@@ -16,8 +16,9 @@ export default function Navbar() {
       <nav>
         <Link to="/dashboard">Dashboard</Link>
         <Link to="/rooms/create">Create Room</Link>
+        <Link to="/settings">Settings</Link>
       </nav>
-      <div>
+      <div className="nav-user">
         <span>{user?.name || "Guest"}</span>
         <button onClick={onLogout}>Logout</button>
       </div>

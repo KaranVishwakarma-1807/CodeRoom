@@ -13,6 +13,9 @@ class Settings(BaseSettings):
     jwt_secret_key: str = "change-me"
     jwt_algorithm: str = "HS256"
     jwt_expire_minutes: int = 120
+    auth_bypass_enabled: bool = False
+    auth_bypass_email: str = "dev@coderoom.local"
+    auth_bypass_name: str = "Dev User"
 
     room_expiry_hours: int = 6
     piston_api_url: str | None = None

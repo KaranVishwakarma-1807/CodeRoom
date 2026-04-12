@@ -4,6 +4,7 @@ import CreateRoom from "./pages/CreateRoom";
 import InterviewRoom from "./pages/InterviewRoom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Settings from "./pages/Settings";
 import { useAuth } from "./context/AuthContext";
 
 function ProtectedRoute({ children }) {
@@ -29,6 +30,14 @@ export default function App() {
         element={
           <ProtectedRoute>
             <CreateRoom />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/settings"
+        element={
+          <ProtectedRoute>
+            <Settings />
           </ProtectedRoute>
         }
       />
