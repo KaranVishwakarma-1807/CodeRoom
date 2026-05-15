@@ -86,8 +86,9 @@ copy .env.example .env
 npm run dev
 ```
 
-## Free Code Execution Option
+## Open-Source Code Execution
 
-- Recommended free starter: **Piston** (`https://emkc.org/api/v2/piston/execute`)
-- Already integrated via `POST /api/v1/execute` in backend.
-- Set `PISTON_API_URL` in `backend/.env`.
+- We use **Judge0** for code execution.
+- You can host it yourself or use their API.
+- Set `JUDGE0_API_URL` in `backend/.env` (default is `http://localhost:2358`).
+- Set `JUDGE0_API_KEY` if required by your hosting environment.

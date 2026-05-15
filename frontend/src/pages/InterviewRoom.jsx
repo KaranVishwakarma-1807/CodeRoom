@@ -185,12 +185,9 @@ export default function InterviewRoom() {
   return (
     <main className="room-page app-shell">
       <header className="room-header panel">
-        <div className="room-topbar">
-          <div>
-            <h2>{roomTitle}</h2>
-            <p className="status">{statusMessage}</p>
-          </div>
-          <button onClick={() => navigate("/dashboard")}>Leave</button>
+        <div className="room-title">
+          <h2>{roomTitle}</h2>
+          {statusMessage && <span className="status">{statusMessage}</span>}
         </div>
         <div className="room-toolbar">
           <Timer
@@ -201,51 +198,62 @@ export default function InterviewRoom() {
             onReset={resetTimerAction}
           />
           <ParticipantList participants={participants} />
-          <div className="row">
-            <button onClick={handleStartSession} disabled={sessionBusy || !isInterviewer}>Start Session</button>
-            <button onClick={handleEndSession} disabled={sessionBusy || !isInterviewer}>End Session</button>
-          </div>
+          <button className="primary" onClick={handleStartSession} disabled={sessionBusy || !isInterviewer}>Start Session</button>
+          <button onClick={handleEndSession} disabled={sessionBusy || !isInterviewer}>End</button>
+          <button onClick={() => navigate("/dashboard")}>Leave</button>
         </div>
       </header>
 
       <section className="room-main">
-        <CodeEditor
-          code={code}
-          language={language}
-          onCodeChange={updateCode}
-          onLanguageChange={updateLanguage}
-          onRun={runCode}
-        />
-        <ChatPanel messages={messages} onSend={sendChat} />
-      </section>
-
-      <OutputConsole output={output} error={error} />
-      <section className="room-bottom-grid">
-        <VideoPanel roomCode={roomCode} userName={user?.name || "Guest"} />
-        <ScorecardPanel feedbackEntries={feedbackEntries} />
-      </section>
-      {isInterviewer ? (
-        <FeedbackPanel
-          participants={participants}
-          onSubmit={handleSubmitFeedback}
-          submitting={submittingFeedback}
-        />
-      ) : null}
-      <section className="panel history-panel">
-        <h3>Interview History</h3>
-        {history.length === 0 ? <p>No sessions yet.</p> : null}
-        {history.map((row) => (
-          <article key={row.id} className="history-item">
-            <div className="row spread">
-              <strong>Session #{row.id}</strong>
-              <span>{row.status}</span>
+        <div className="left-pane animate-fade">
+          <div className="side-panel">
+            <VideoPanel roomCode={roomCode} userName={user?.name || "Guest"} />
+          </div>
+          
+          <ChatPanel messages={messages} onSend={sendChat} />
+          
+          <div className="side-panel">
+            <ScorecardPanel feedbackEntries={feedbackEntries} />
+          </div>
+          
+          {isInterviewer ? (
+            <div className="side-panel">
+              <FeedbackPanel
+                participants={participants}
+                onSubmit={handleSubmitFeedback}
+                submitting={submittingFeedback}
+              />
             </div>
-            <p>Language: {row.language}</p>
-            <p>Chat Messages: {row.chat_count}</p>
-            <p>Latest Code Snapshot: {row.latest_code_language || "N/A"}</p>
-            <p>Overall Score: {row.overall_score ?? "N/A"}</p>
-          </article>
-        ))}
+          ) : null}
+          
+          <section className="side-panel history-panel">
+            <h3>Interview History</h3>
+            {history.length === 0 ? <p>No sessions yet.</p> : null}
+            {history.map((row) => (
+              <article key={row.id} className="history-item">
+                <div className="row spread">
+                  <strong>Session #{row.id}</strong>
+                  <span>{row.status}</span>
+                </div>
+                <p>Language: {row.language}</p>
+                <p>Chat Messages: {row.chat_count}</p>
+                <p>Latest Code Snapshot: {row.latest_code_language || "N/A"}</p>
+                <p>Overall Score: {row.overall_score ?? "N/A"}</p>
+              </article>
+            ))}
+          </section>
+        </div>
+
+        <div className="right-pane animate-fade" style={{ animationDelay: "0.1s" }}>
+          <CodeEditor
+            code={code}
+            language={language}
+            onCodeChange={updateCode}
+            onLanguageChange={updateLanguage}
+            onRun={runCode}
+          />
+          <OutputConsole output={output} error={error} />
+        </div>
       </section>
     </main>
   );

@@ -156,7 +156,7 @@ export default function VideoPanel({ roomCode, userName }) {
 
   return (
     <section className="panel video-panel">
-      <h3>Video/Voice Area</h3>
+      <div className="panel-header">Video / Voice</div>
       <p className="status">{status}</p>
       {error ? <p className="error">{error}</p> : null}
       <div className="video-controls">

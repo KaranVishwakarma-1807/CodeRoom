@@ -4,33 +4,34 @@ export default function CodeEditor({ code, language, onCodeChange, onLanguageCha
   const monacoLanguage = language === "cpp" ? "cpp" : language;
 
   return (
-    <section className="panel editor-panel">
-      <div className="row spread">
-        <h3>Code Editor</h3>
-        <div className="row">
-          <select value={language} onChange={(e) => onLanguageChange(e.target.value)}>
-            <option value="python">Python</option>
-            <option value="javascript">JavaScript</option>
-            <option value="java">Java</option>
-            <option value="cpp">C++</option>
-          </select>
-          <button onClick={onRun}>Run</button>
-        </div>
+    <div className="editor-panel">
+      <div className="panel-header">
+        <select value={language} onChange={(e) => onLanguageChange(e.target.value)}>
+          <option value="python">Python</option>
+          <option value="javascript">JavaScript</option>
+          <option value="java">Java</option>
+          <option value="cpp">C++</option>
+        </select>
+        <button className="primary" onClick={onRun}>Run Code</button>
       </div>
       <div className="editor-shell">
         <Editor
-          height="380px"
+          height="100%"
           language={monacoLanguage}
+          theme="vs-dark"
           value={code}
           onChange={(value) => onCodeChange(value ?? "")}
           options={{
             minimap: { enabled: false },
             fontSize: 14,
+            fontFamily: "'JetBrains Mono', 'Menlo', 'Monaco', 'Courier New', monospace",
             wordWrap: "on",
             scrollBeyondLastLine: false,
+            padding: { top: 16 },
+            lineHeight: 24,
           }}
         />
       </div>
-    </section>
+    </div>
   );
 }

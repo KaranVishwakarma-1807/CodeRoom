@@ -1,9 +1,10 @@
 export default function OutputConsole({ output, error }) {
   return (
-    <section className="panel output-panel">
-      <h3>Output Console</h3>
-      <pre>{output || "Run code to see output."}</pre>
-      {error ? <pre className="error">{error}</pre> : null}
-    </section>
+    <div className="output-panel">
+      <div className="panel-header">Output Console</div>
+      <div className={`output-content ${error ? "error" : ""}`}>
+        {error || output || "Run code to see output."}
+      </div>
+    </div>
   );
 }

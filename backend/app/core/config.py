@@ -18,8 +18,8 @@ class Settings(BaseSettings):
     auth_bypass_name: str = "Dev User"
 
     room_expiry_hours: int = 6
-    piston_api_url: str | None = None
-    piston_api_key: str | None = None
+    judge0_api_url: str | None = None
+    judge0_api_key: str | None = None
     metered_domain: str | None = None
     metered_secret_key: str | None = None
     metered_embed_sdk_url: str = "https://cdn.metered.ca/sdk/frame/1.4.3/sdk-frame.min.js"
