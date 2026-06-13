@@ -1,6 +1,7 @@
 import json
 from datetime import datetime
 
+# pyrefly: ignore [missing-import]
 from fastapi import APIRouter, Depends, HTTPException, WebSocket, WebSocketDisconnect
 from sqlalchemy.orm import Session
 
@@ -71,7 +72,7 @@ async def room_socket(websocket: WebSocket, room_code: str, db: Session = Depend
 
     participant = (
         db.query(Participant)
-        .filter(Participant.room_id == room.id, Participant.user_id == user.id, Participant.left_at.is_(None))
+        .filter(Participant.room_id == room.id, Participant.user_id == user.id)
         .order_by(Participant.joined_at.desc())
         .first()
     )
@@ -80,6 +81,11 @@ async def room_socket(websocket: WebSocket, room_code: str, db: Session = Depend
         db.add(participant)
         db.commit()
         db.refresh(participant)
+    else:
+        if participant.left_at is not None:
+            participant.left_at = None
+            db.commit()
+            db.refresh(participant)
     role = participant.role
 
     joined_first_connection = await ws_manager.connect(room_code, websocket, user.id, user.name, role)
@@ -133,20 +139,29 @@ async def room_socket(websocket: WebSocket, room_code: str, db: Session = Depend
             elif event_type == "timer_reset":
                 payload["timer"] = reset_timer(room_code, int(payload.get("seconds", 0)))
             elif event_type == "run_code":
-                result = await execute_code(
-                    CodeExecuteRequest(
-                        language=payload.get("language", "python"),
-                        code=payload.get("code", ""),
-                        stdin=payload.get("stdin", ""),
+                try:
+                    result = await execute_code(
+                        CodeExecuteRequest(
+                            language=payload.get("language", "python"),
+                            code=payload.get("code", ""),
+                            stdin=payload.get("stdin", ""),
+                        )
                     )
-                )
+                    exec_output = result.output
+                    exec_error = result.error
+                except HTTPException as exc:
+                    exec_output = ""
+                    exec_error = exc.detail
+                except Exception as exc:
+                    exec_output = ""
+                    exec_error = str(exc)
                 await ws_manager.broadcast(
                     room_code,
                     {
                         "type": "code_output",
                         "room_code": room_code,
                         "user": user.name,
-                        "payload": {"output": result.output, "error": result.error},
+                        "payload": {"output": exec_output, "error": exec_error},
                     },
                 )
                 continue
